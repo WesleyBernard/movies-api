@@ -24,7 +24,8 @@ public class MovieServlet extends HttpServlet{
         response.setContentType("application/json");
         try {
             PrintWriter out = response.getWriter();
-            out.println(Arrays.toString(movies.toArray()));
+            String movieString = new Gson().toJson(movies.toArray());
+            out.println(movieString);
         } catch (IOException e) {
             e.printStackTrace();
         }
