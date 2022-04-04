@@ -4,6 +4,7 @@ import data.Movie;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.WebServlet;
@@ -23,7 +24,7 @@ public class MovieServlet extends HttpServlet{
         response.setContentType("application/json");
         try {
             PrintWriter out = response.getWriter();
-            out.println(movies);
+            out.println(Arrays.toString(movies.toArray()));
         } catch (IOException e) {
             e.printStackTrace();
         }
