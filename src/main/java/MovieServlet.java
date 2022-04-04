@@ -52,4 +52,53 @@ public class MovieServlet extends HttpServlet{
         }
     }
 
+    @Override
+    protected void doPut(HttpServletRequest request, HttpServletResponse response) {
+        response.setContentType("application/json");
+        String [] uriParts = request.getRequestURI().split("/");
+        int targetId = Integer.parseInt(uriParts[uriParts.length - 1]);
+        for (Movie movie: movies) {
+            if(movie.getId() == targetId) {
+                try {
+                    Movie editedMovie = new Gson().fromJson(request.getReader(), Movie.class);
+                    if(!editedMovie.getTitle().isEmpty()) {
+                        movie.setTitle(editedMovie.getTitle());
+                    }
+                    if(!editedMovie.getPlot().isEmpty()) {
+                        movie.setPlot(editedMovie.getPlot());
+                    }
+                    if(editedMovie.getRating() != 0) {
+                        movie.setRating(editedMovie.getRating());
+                    }
+//                    if(!editedMovie.getPoster().isEmpty()) {
+//                        movie.setPoster(editedMovie.getPoster());
+//                    }
+                    if(editedMovie.getYear() != 0) {
+                        movie.setYear(editedMovie.getYear());
+                    }
+
+                    if(!editedMovie.getGenre().isEmpty()) {
+                        movie.setGenre(editedMovie.getGenre());
+                    }
+                    if(!editedMovie.getDirector().isEmpty()) {
+                        movie.setDirector(editedMovie.getDirector());
+                    }
+                    if(!editedMovie.getActors().isEmpty()) {
+                        movie.setActors(editedMovie.getActors());
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }
+
+        try {
+            PrintWriter out = response.getWriter();
+            out.println("Movie edited");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 }
