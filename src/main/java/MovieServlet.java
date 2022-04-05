@@ -67,7 +67,7 @@ public class MovieServlet extends HttpServlet{
                     if(editedMovie.getPlot() != null) {
                         movie.setPlot(editedMovie.getPlot());
                     }
-                    if(editedMovie.getRating() != 0) {
+                    if(editedMovie.getRating() != movie.getRating()) {
                         movie.setRating(editedMovie.getRating());
                     }
                     if(editedMovie.getPoster()!= null) {
@@ -117,7 +117,7 @@ public class MovieServlet extends HttpServlet{
             PrintWriter out = response.getWriter();
             out.println("Deleted Movie");
         } catch (IOException e) {
-            System.out.println(e);
+            e.printStackTrace();
         }
     }
 
