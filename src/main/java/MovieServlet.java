@@ -102,14 +102,14 @@ public class MovieServlet extends HttpServlet{
     }
 
     @Override
-    protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doDelete(HttpServletRequest request, HttpServletResponse response) {
         response.setContentType("application/json");
         int targetId = 0;
         try {
             String [] uriParts = request.getRequestURI().split("/");
             targetId = Integer.parseInt(uriParts[uriParts.length - 1]);
         } catch (Exception e) {
-
+            e.printStackTrace();
         }
         try {
             int finalTargetId = targetId;
