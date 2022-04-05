@@ -61,29 +61,29 @@ public class MovieServlet extends HttpServlet{
             if(movie.getId() == targetId) {
                 try {
                     Movie editedMovie = new Gson().fromJson(request.getReader(), Movie.class);
-                    if(!editedMovie.getTitle().isEmpty()) {
+                    if(editedMovie.getTitle() != null) {
                         movie.setTitle(editedMovie.getTitle());
                     }
-                    if(!editedMovie.getPlot().isEmpty()) {
+                    if(editedMovie.getPlot() != null) {
                         movie.setPlot(editedMovie.getPlot());
                     }
                     if(editedMovie.getRating() != 0) {
                         movie.setRating(editedMovie.getRating());
                     }
-//                    if(!editedMovie.getPoster().isEmpty()) {
-//                        movie.setPoster(editedMovie.getPoster());
-//                    }
+                    if(editedMovie.getPoster()!= null) {
+                        movie.setPoster(editedMovie.getPoster());
+                    }
                     if(editedMovie.getYear() != 0) {
                         movie.setYear(editedMovie.getYear());
                     }
 
-                    if(!editedMovie.getGenre().isEmpty()) {
+                    if(editedMovie.getGenre()!= null) {
                         movie.setGenre(editedMovie.getGenre());
                     }
-                    if(!editedMovie.getDirector().isEmpty()) {
+                    if(editedMovie.getDirector()!= null) {
                         movie.setDirector(editedMovie.getDirector());
                     }
-                    if(!editedMovie.getActors().isEmpty()) {
+                    if(editedMovie.getActors()!= null) {
                         movie.setActors(editedMovie.getActors());
                     }
                 } catch (IOException e) {
