@@ -67,7 +67,7 @@ public class MovieServlet extends HttpServlet{
                     if(editedMovie.getPlot() != null) {
                         movie.setPlot(editedMovie.getPlot());
                     }
-                    if(editedMovie.getRating() != movie.getRating()) {
+                    if(editedMovie.getRating() != 0) {
                         movie.setRating(editedMovie.getRating());
                     }
                     if(editedMovie.getPoster()!= null) {
