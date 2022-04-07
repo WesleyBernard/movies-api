@@ -26,7 +26,26 @@ public class MySqlMoviesDao implements MoviesDao{
 
     @Override
     public List<Movie> all() throws SQLException {
-        // TODO: Get ALL the movies
+        Statement statement = connection.createStatement();
+
+        ResultSet rs = statement.executeQuery("SELECT * FROM movies");
+
+        List<Movie> movies = new ArrayList<>();
+
+        while (rs.next()) {
+            movies.add(new Movie(
+                    rs.getString("title"),
+                    rs.getInt("rating"),
+                    rs.getString("poster"),
+                    rs.getInt("year"),
+                    rs.getString("genre"),
+                    rs.getString("director"),
+                    rs.getString("plot"),
+                    rs.getString("actors"),
+                    rs.getInt("id")
+            ));
+        }
+        return movies;
     }
 
     @Override
@@ -102,7 +121,15 @@ public class MySqlMoviesDao implements MoviesDao{
 
     @Override
     public void delete(int id) throws SQLException {
-        //TODO: Annihilate a movie
+        String sql =
+                "DELETE FROM movies " +
+                        "WHERE id = ?";
+
+        PreparedStatement statement = connection.prepareStatement(sql);
+
+        statement.setInt(1, id);
+
+        statement.execute();
     }
 
 }
