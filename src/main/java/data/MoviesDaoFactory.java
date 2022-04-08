@@ -1,7 +1,7 @@
 package data;
 import data.InMemoryMoviesDao;
 import data.MoviesDao;
-//import data.MySqlMoviesDao;
+import data.MySqlMoviesDao;
 
 public class MoviesDaoFactory  {
 

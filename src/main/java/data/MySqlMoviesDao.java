@@ -49,13 +49,44 @@ public class MySqlMoviesDao implements MoviesDao{
     }
 
     @Override
-    public Movie findOne(int id) {
-        // TODO: Get one movie by id
+    public Movie findOne(int id){
+        String sql = "select * from movies where id = ?";
+
+        try {
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setInt(1, id);
+
+            ResultSet rs = statement.executeQuery();
+
+            Movie movie = new Movie();
+            movie.setTitle(rs.getString("title"));
+            movie.setId(rs.getInt("id"));
+            movie.setActors(rs.getString("actors"));
+            movie.setDirector(rs.getString("director"));
+            movie.setGenre(rs.getString("genre"));
+            movie.setPlot(rs.getString("plot"));
+            movie.setPoster(rs.getString("poster"));
+            movie.setRating(rs.getInt("rating"));
+            movie.setYear(rs.getInt("year"));
+            return movie;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return new Movie();
     }
 
     @Override
     public void insert(Movie movie) {
-        // TODO: Insert one movie
+        String sql = "insert into movies (title, year, director, actors, rating, poster, genre, plot)" +
+                "values (?, ?, ?, ?, ?, ?, ?, ?)";
+
+        try {
+            PreparedStatement statement = connection.prepareStatement(sql);
+
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     public void insertAll(Movie[] movies) throws SQLException {
