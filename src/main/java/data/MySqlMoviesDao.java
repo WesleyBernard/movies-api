@@ -96,7 +96,7 @@ public class MySqlMoviesDao implements MoviesDao{
                 "VALUES ");
 
 
-        // Add a interpolation template for each element in movies list
+        // Add an interpolation template for each element in movies list
         sql.append("(?, ?, ?, ?, ?, ?, ?, ?), ".repeat(movies.length));
 
         // Create a new String and take off the last comma and whitespace
