@@ -12,13 +12,14 @@ import javax.servlet.http.*;
 import javax.servlet.annotation.WebServlet;
 
 import static data.MoviesDaoFactory.DAOType.IN_MEMORY;
+import static data.MoviesDaoFactory.DAOType.MYSQL;
 import static data.MoviesDaoFactory.getMoviesDao;
 
 @WebServlet(name="MovieServlet", urlPatterns="/movies/*")
 public class MovieServlet extends HttpServlet{
 
 
-    MoviesDao moviesDao = getMoviesDao(IN_MEMORY);
+    MoviesDao moviesDao = getMoviesDao(MYSQL);
 
 
 
