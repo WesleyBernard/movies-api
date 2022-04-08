@@ -28,7 +28,7 @@ public class MySqlMoviesDao implements MoviesDao{
     public List<Movie> all() throws SQLException {
         Statement statement = connection.createStatement();
 
-        ResultSet rs = statement.executeQuery("SELECT * FROM movies");
+        ResultSet rs = statement.executeQuery("SELECT * FROM wesley.movies");
 
         List<Movie> movies = new ArrayList<>();
 
@@ -50,7 +50,7 @@ public class MySqlMoviesDao implements MoviesDao{
 
     @Override
     public Movie findOne(int id){
-        String sql = "select * from movies where id = ?";
+        String sql = "select * from wesley.movies where id = ?";
 
         try {
             PreparedStatement statement = connection.prepareStatement(sql);
@@ -77,7 +77,7 @@ public class MySqlMoviesDao implements MoviesDao{
 
     @Override
     public void insert(Movie movie) {
-        String sql = "insert into movies (title, year, director, actors, rating, poster, genre, plot)" +
+        String sql = "insert into wesley.movies (title, year, director, actors, rating, poster, genre, plot)" +
                 "values (?, ?, ?, ?, ?, ?, ?, ?)";
 
         try {
@@ -153,7 +153,7 @@ public class MySqlMoviesDao implements MoviesDao{
     @Override
     public void delete(int id) throws SQLException {
         String sql =
-                "DELETE FROM movies " +
+                "DELETE FROM wesley.movies " +
                         "WHERE id = ?";
 
         PreparedStatement statement = connection.prepareStatement(sql);
