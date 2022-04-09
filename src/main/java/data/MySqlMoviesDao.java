@@ -124,30 +124,84 @@ public class MySqlMoviesDao implements MoviesDao{
     }
 
     @Override
-    public void update(Movie movie) throws SQLException {
-        StringBuilder sql = new StringBuilder("update movies" +
-                "set title = ?, " +
-                "year = ?, " +
-                "director = ?, " +
-                "actors = ?, " +
-                "rating = ?, "+
-                "poster = ?, " +
-                "genre = ?, " +
-                "plot = ?" +
-                "where id = ?");
+    public void update(Movie movie){
+        try {
+            PreparedStatement ps = connection.prepareStatement("SELECT * FROM wesley.movies where id = ?");
+            ps.setInt(1, movie.getId());
+            ResultSet rs = ps.executeQuery();
+            rs.next();
+            Movie oldData = new Movie();
+            oldData.setRating(rs.getInt("rating"));
+            oldData.setPoster(rs.getString("poster"));
+            oldData.setPlot(rs.getString("plot"));
+            oldData.setGenre(rs.getString("genre"));
+            oldData.setDirector(rs.getString("director"));
+            oldData.setActors(rs.getString("actors"));
+            oldData.setTitle(rs.getString("title"));
+            oldData.setId(rs.getInt("id"));
+            oldData.setYear(rs.getInt("year"));
 
-        PreparedStatement statement = connection.prepareStatement(sql.toString());
-        statement.setString(1, movie.getTitle());
-        statement.setInt( 2, movie.getYear());
-        statement.setString(3, movie.getDirector());
-        statement.setString( 4, movie.getActors());
-        statement.setInt(5, movie.getRating());
-        statement.setString( 6, movie.getPoster());
-        statement.setString(7, movie.getGenre());
-        statement.setString( 8, movie.getPlot());
-        statement.setInt(9, movie.getId());
+            String sql = "update wesley.movies " +
+                    "set title = ?, " +
+                    "year = ?, " +
+                    "director = ?, " +
+                    "actors = ?, " +
+                    "rating = ?, " +
+                    "poster = ?, " +
+                    "genre = ?, " +
+                    "plot = ?" +
+                    "where id = ?";
 
-        statement.executeUpdate();
+            PreparedStatement statement = connection.prepareStatement(sql);
+            if (movie.getTitle() != null) {
+                statement.setString(1, movie.getTitle());
+            } else {
+                statement.setString(1, oldData.getTitle());
+            }
+            if (movie.getYear() != 0) {
+                statement.setInt(2, movie.getYear());
+            } else {
+                statement.setInt(2, oldData.getYear());
+            }
+            if (movie.getDirector() != null) {
+                statement.setString(3, movie.getDirector());
+            } else {
+                statement.setString(3, oldData.getDirector());
+            }
+            if (movie.getActors() != null) {
+                statement.setString(4, movie.getActors());
+            } else {
+                statement.setString(4, oldData.getActors());
+            }
+            if (movie.getRating() != 0) {
+                statement.setInt(5, movie.getRating());
+            } else {
+                statement.setInt(5, oldData.getRating());
+            }
+            if (movie.getPoster() != null) {
+                statement.setString(6, movie.getPoster());
+            } else {
+                statement.setString(6, oldData.getPoster());
+            }
+            if (movie.getGenre() != null) {
+                statement.setString(7, movie.getGenre());
+            } else {
+                statement.setString(7, oldData.getGenre());
+            }
+            if (movie.getPlot() != null) {
+                statement.setString(8, movie.getPlot());
+            } else {
+                statement.setString(8, oldData.getPlot());
+            }
+            if (movie.getId() != 0) {
+                statement.setInt(9, movie.getId());
+            } else {
+                statement.setInt(9, oldData.getId());
+            }
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
