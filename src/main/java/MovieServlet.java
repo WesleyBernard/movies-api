@@ -43,9 +43,9 @@ public class MovieServlet extends HttpServlet{
     protected void doPost(HttpServletRequest request, HttpServletResponse response) {
         response.setContentType("application/json");
         try {
-            Movie[] newMovies = new Gson().fromJson(request.getReader(), Movie[].class);
-                moviesDao.insertAll(newMovies);
-        } catch (IOException | SQLException e) {
+            Movie newMovies = new Gson().fromJson(request.getReader(), Movie.class);
+                moviesDao.insert(newMovies);
+        } catch (IOException e) {
             e.printStackTrace();
         }
         try {
