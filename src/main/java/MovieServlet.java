@@ -59,7 +59,10 @@ public class MovieServlet extends HttpServlet{
     @Override
     protected void doPut(HttpServletRequest request, HttpServletResponse response) {
         try {
+            String[] uriParts = request.getRequestURI().split("/");
+            int targetId = Integer.parseInt(uriParts[uriParts.length - 1]);
             Movie movie = new Gson().fromJson(request.getReader(), Movie.class);
+            movie.setId(targetId);
             moviesDao.update(movie);
         } catch (Exception e) {
             e.printStackTrace();

@@ -55,9 +55,8 @@ public class MySqlMoviesDao implements MoviesDao{
         try {
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setInt(1, id);
-
             ResultSet rs = statement.executeQuery();
-
+            rs.next();
             Movie movie = new Movie();
             movie.setTitle(rs.getString("title"));
             movie.setId(rs.getInt("id"));
@@ -126,21 +125,7 @@ public class MySqlMoviesDao implements MoviesDao{
     @Override
     public void update(Movie movie){
         try {
-            PreparedStatement ps = connection.prepareStatement("SELECT * FROM wesley.movies where id = ?");
-            ps.setInt(1, movie.getId());
-            ResultSet rs = ps.executeQuery();
-            rs.next();
-            Movie oldData = new Movie();
-            oldData.setRating(rs.getInt("rating"));
-            oldData.setPoster(rs.getString("poster"));
-            oldData.setPlot(rs.getString("plot"));
-            oldData.setGenre(rs.getString("genre"));
-            oldData.setDirector(rs.getString("director"));
-            oldData.setActors(rs.getString("actors"));
-            oldData.setTitle(rs.getString("title"));
-            oldData.setId(rs.getInt("id"));
-            oldData.setYear(rs.getInt("year"));
-
+            Movie oldData = findOne(movie.getId());
             String sql = "update wesley.movies " +
                     "set title = ?, " +
                     "year = ?, " +
